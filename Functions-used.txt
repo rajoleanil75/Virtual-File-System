@@ -1,0 +1,21 @@
+Functions used in Virtual File System Project
+
+ 1. stricmp
+ -> Syntax:
+ 	#include <string.h>
+	int stricmp(const char *string1, const char *string2);
+	
+	Description:
+	The stricmp function is available for C++ programs. It is available for C only when the program defines the 
+	__cplusplus__strings__ macro.
+
+	stricmp compares string1 and string2 without sensitivity to case. All alphabetic characters 
+	in the two arguments string1 and string2 are converted to lowercase before the comparison.
+	The function operates on null-ended strings. The string arguments to the function are expected 
+	to contain a null character (\0) marking the end of the string.
+
+	Return Value
+	stricmp returns a value indicating the relationship between the two strings, as follows:
+	Less than 0 -> string1 less than string2 
+	0 -> string1 equivalent to string2 
+	Greater than 0 -> string1 greater than string2 

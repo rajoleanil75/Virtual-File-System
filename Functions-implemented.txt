@@ -1,0 +1,49 @@
+Functions Implemented in Virtual File system project
+
+	1. create
+		 Description: Used to create new regular file
+		 Usage: create File_name permission
+	
+	2. read
+		 Description: Used to read data from regular file
+		 Usage: read File_name No_of_Bytes_To_Read
+	
+	3. write
+		 Description: Used to write into regular file
+		 Usage: write File_name\n After this enter the data that you want to write
+	
+	4. ls
+		 Description: Used to list all information of files in Directory
+		 Usage: ls
+	
+	5. stat
+		 Description: Used to display information of file
+		 Usage: stat File_name
+	
+	6. fstat
+		 Description: Used to display information of file
+		 Usage: fstat File_Descriptor
+	
+	7. truncate
+		 Description: Used to remove data from file
+		 Usage: truncate File_name
+	
+	8. open
+		 Description: Used to open existing file
+		 Usage: open File_name mode
+	
+	9. close
+		 Description: Used to close opened file
+		 Usage: close File_name
+	
+	10. closeall
+		 Description: Used to close all opened file
+		 Usage: closeall
+
+	11. lseek
+		 Description: Used to change file offset
+		 Usage: lseek File_name ChangeInOffset StartPoint
+	
+	12. rm
+		 Description: Used to delete the file
+		 Usage: rm File_name

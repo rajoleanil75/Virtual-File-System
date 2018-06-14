@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #define MAXINODE 50
 #define READ 1
 #define WRITE 2
