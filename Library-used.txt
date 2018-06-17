@@ -1,0 +1,47 @@
+Library Used in Virtual File System Project
+
+  1. #include<iostream>
+  ->In order to read or write to the standard input/output streams you need to include it.
+
+  2. using namespace std;
+  -> What that does is tell the compiler that symbol names defined in the std namespace 
+  are to be brought into your program's scope, so you can omit the namespace qualifier, 
+  and write for example
+
+  3. #include<stdio.h>
+  -> Input and Output operations can also be performed in C++ using the C Standard Input 
+  and Output Library (cstdio, known as stdio.h in the C language). This library uses what 
+  are called streams to operate with physical devices such as keyboards, printers, terminals 
+  or with any other type of files supported by the system. Streams are an abstraction to 
+  interact with these in an uniform way; All streams have similar properties independently 
+  of the individual characteristics of the physical media they are associated with.
+  Streams are handled in the cstdio library as pointers to FILE objects. A pointer to a 
+  FILE object uniquely identifies a stream, and is used as a parameter in the operations 
+  involving that stream.
+  There also exist three standard streams: stdin, stdout and stderr, which are automatically 
+  created and opened for all programs using the library.
+
+  4. #include<stdlib.h>
+  -> This header defines several general purpose functions, including dynamic memory management, 
+  random number generation, communication with the environment, integer arithmetics, searching, 
+  sorting and converting.
+
+  5. #include<string.h>
+  -> This header file defines several functions to manipulate C strings and arrays.
+
+  6. #include<io.h>
+  -> io.h originally provided access to declarations for the low-level I/O primitives in Unix 
+  and associated constants and such. Since quite a bit of code depended on it, many (most?) 
+  compilers for other systems provided a header by the same name, and some library functions 
+  that worked (at least mostly) like the ones in Unix.
+
+  7. #include<unistd.h>
+  -> In the C and C++ programming languages, unistd.h is the name of the header file that provides 
+  access to the POSIX operating system API. It is defined by the POSIX.1 standard, the base of 
+  the Single Unix Specification, and should therefore be available in any conforming 
+  (or quasi-conforming) operating system/compiler (all official versions of UNIX, including macOS, Linux, etc.).
+  On Unix-like systems, the interface defined by unistd.h is typically made up largely of system 
+  call wrapper functions such as fork, pipe and I/O primitives (read, write, close, etc.).
+
+
+
