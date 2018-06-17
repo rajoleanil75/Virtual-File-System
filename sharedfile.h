@@ -11,7 +11,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<io.h>
 #include<unistd.h>
 
 typedef struct superblock
@@ -59,21 +58,21 @@ public:
 	VirtualFS();
 	~VirtualFS();
 	virtual void man(char *);
-	virtual void displayHelp();
-	virtual int getFDFromName(char *);
-	virtual PINODE get_Inode(char *);
-	virtual void createDILB();
-	virtual void initialiseSuperBlock();
-	virtual int createFile(char *, int );
-	virtual int rmFile(char *);
-	virtual int readFile(int , char *, int );
-	virtual int writeFile(int , char *, int );
-	virtual int openFile(char *,int );
-	virtual void closeFileByFD(int );
-	virtual void closeAllFile();
-	virtual int lseekFile(int , int , int );
-	virtual void isFile();
-	virtual int fstatFile(int );
-	virtual int statFile(char *);
-	virtual int truncateFile(char *);
-}
+	// virtual void displayHelp();
+	// virtual int getFDFromName(char *);
+	// virtual PINODE get_Inode(char *);
+	// virtual void createDILB();
+	// virtual void initialiseSuperBlock();
+	// virtual int createFile(char *, int );
+	// virtual int rmFile(char *);
+	// virtual int readFile(int , char *, int );
+	// virtual int writeFile(int , char *, int );
+	// virtual int openFile(char *,int );
+	// virtual void closeFileByFD(int );
+	// virtual void closeAllFile();
+	// virtual int lseekFile(int , int , int );
+	// virtual void isFile();
+	// virtual int fstatFile(int );
+	// virtual int statFile(char *);
+	// virtual int truncateFile(char *);
+};
