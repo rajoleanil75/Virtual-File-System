@@ -19,6 +19,46 @@ VirtualFS::~VirtualFS()
 	}
 }
 
+void VirtualFS::initInodeTable()
+{
+	PINODE nn = NULL;
+	PINODE temp = head;
+	int i = 1;
+	while(i<=MAXINODE)
+	{
+		nn = new INODE;
+		nn->LinkCount = nn->ReferenceCount = 0;
+		nn->FileType = nn->FileSize = 0;
+		nn->Buffer = NULL;
+		nn->next = NULL;
+		nn->InodeNumber = i;
+		if(temp == NULL)
+		{
+			head = nn;
+			temp = head;
+		}
+		else
+		{
+			temp->next = nn;
+			temp = temp->next;
+		}
+		i++;
+	}
+}
+
+void VirtualFS::initSuperBlock()
+{
+	//Initialise Super block and set total inode to MAXINODE and make UFDTArr NULL
+	int i = 0;
+	while(i<MAXINODE)
+	{
+		UFDTArr[i].ptrfiletable = NULL;
+		i++;
+	}
+	SUPERBLOCKobj.TotalInodes = MAXINODE;
+	SUPERBLOCKobj.FreeInode = MAXINODE;
+}
+
 void VirtualFS::man(char *name)
 {
 	if(name == NULL)

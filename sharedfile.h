@@ -58,11 +58,11 @@ public:
 	VirtualFS();
 	~VirtualFS();
 	virtual void man(char *);
+	virtual void initSuperBlock();
+	virtual void initInodeTable();
 	// virtual void displayHelp();
 	// virtual int getFDFromName(char *);
 	// virtual PINODE get_Inode(char *);
-	// virtual void createDILB();
-	// virtual void initialiseSuperBlock();
 	// virtual int createFile(char *, int );
 	// virtual int rmFile(char *);
 	// virtual int readFile(int , char *, int );
