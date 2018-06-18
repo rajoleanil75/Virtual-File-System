@@ -18,6 +18,17 @@ VirtualFS::~VirtualFS()
 		delete temp;
 	}
 }
+void initialiseSuperBlock()
+{
+	int i = 0;
+	while(i<MAXINODE)
+	{
+		UFDTArr[i].ptrfiletable = NULL;
+		i++;
+	}
+	SUPERBLOCKobj.TotalInodes = MAXINODE;
+	SUPERBLOCKobj.FreeInode = MAXINODE;
+}
 
 void VirtualFS::man(char *name)
 {

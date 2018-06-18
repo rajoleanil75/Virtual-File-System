@@ -5,8 +5,12 @@
 
 int main(int argc, char const *argv[])
 {
+    char *ptr = NULL;
+    int ret = 0, fd = 0, count = 0;
+    char command[4][80], str[80], arr[1024];
+
     void *p = NULL;
-    VirtualFS *ptr = NULL;
+    VirtualFS *fptr = NULL;
     VirtualFS* (*fp1)() = NULL;
     void (*fp2)(VirtualFS *) = NULL;
     p = dlopen("/mnt/f/C Project/Virtual-File-System/VirtualFS.so",RTLD_LAZY);
@@ -19,12 +23,12 @@ int main(int argc, char const *argv[])
     {
         fp1 = (VirtualFS*(*)()) dlsym(p,"create");
         fp2 = (void(*)(VirtualFS *)) dlsym(p,"destroy");
-        ptr = fp1();
+        fptr = fp1();
 
-        char command[10] = "create";
-        ptr->man(command);
+        fptr->initialiseSuperBlock();
 
-        fp2(ptr);
+
+        fp2(fptr);
         dlclose(p);
     }
     return 0;
