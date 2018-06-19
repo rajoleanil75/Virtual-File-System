@@ -19,6 +19,58 @@ VirtualFS::~VirtualFS()
 	}
 }
 
+int VirtualFS::fstatFile(int fd)
+{
+	if(fd < 0)
+		return -1;
+	if(UFDTArr[fd].ptrfiletable == NULL)
+		return -2;
+	PINODE temp = UFDTArr[fd].ptrfiletable->ptrinode;
+	printf("\n ------Statistical Information about file------");
+	printf("\n File name: %s",temp->FileName);
+	printf("\n Inode Number: %d",temp->InodeNumber);
+	printf("\n File Size: %d",temp->FileSize);
+	printf("\n Actual File Size: %d",temp->FileActualSize);
+	printf("\n Link count: %d",temp->LinkCount);
+	printf("\n Reference count: %d",temp->ReferenceCount);
+	if(temp->Permission == 1)
+		printf("\nFile permission: Read-only");
+	else if(temp->Permission == 2)
+		printf("\nFile permission: Write");
+	else if(temp->Permission == 3)
+		printf("\nFile permission: Read & Write");
+	return 0;
+}
+
+int VirtualFS::statFile(char *name)
+{
+	if(name == NULL)
+		return -1;
+	PINODE temp = head;
+	while(temp != NULL)
+	{
+		if(strcmp(name, temp->FileName) == 0)
+			break;
+		temp = temp->next;
+	}
+	if(temp == NULL)
+		return -2;
+	printf("\n ------Statistical Information about file------");
+	printf("\n File name: %s",temp->FileName);
+	printf("\n Inode Number: %d",temp->InodeNumber);
+	printf("\n File Size: %d",temp->FileSize);
+	printf("\n Actual File Size: %d",temp->FileActualSize);
+	printf("\n Link count: %d",temp->LinkCount);
+	printf("\n Reference count: %d",temp->ReferenceCount);
+	if(temp->Permission == 1)
+		printf("\nFile permission: Read-only");
+	else if(temp->Permission == 2)
+		printf("\nFile permission: Write");
+	else if(temp->Permission == 3)
+		printf("\nFile permission: Read & Write");
+	return 0;
+}
+
 void VirtualFS::closeAllFile()
 {
 	int i = 0;
@@ -33,6 +85,24 @@ void VirtualFS::closeAllFile()
 		}
 		i++;
 	}
+}
+
+void VirtualFS::displayHelp()
+{
+	printf("\n ls: To list out all files");
+	printf("\n clear: To clear console");
+	printf("\n open: To open the file");
+	printf("\n close: To close the file");
+	printf("\n closeall: To close all opened file");
+	printf("\n read: To read the contents of file");
+	printf("\n write: To write contents to file");
+	printf("\n exit: To terminate file system");
+	printf("\n stat: To display information of file using name");
+	printf("\n fstat: To display information of file using file descriptor");
+	printf("\n truncate: To remove all data from file");
+	printf("\n rm: To delete the file");
+	printf("\n man: To display help for single command");
+	printf("\n\n For more information about command type\n\t man command_name");
 }
 
 void VirtualFS::lsFile()

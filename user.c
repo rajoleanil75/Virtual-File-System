@@ -52,15 +52,49 @@ int main(int argc, char const *argv[])
                     printf("\nAll files closed successfully");
                     continue;
                 }
+                else if(strcasecmp(command[0],"clear") == 0)
+                {
+                    system("clear");
+                    continue;
+                }
+                else if(strcasecmp(command[0],"help") == 0)
+                {
+                    fptr->displayHelp();
+                    continue;
+                }
                 else
                 {
-                    printf("\nERROR: Command Not Found\n");
+                    printf("\n ERROR: Command Not Found\n");
                     continue;
                 }
             }
             else if(count == 2)
             {
-                printf("\n 2");
+                if(strcasecmp(command[0],"stat") == 0)
+                {
+                    ret = fptr->statFile(command[1]);
+                    if(ret == -1)
+                        printf("\n ERROR: Incorrect parameters");
+                    else if( ret == -2)
+                        printf("\n ERROR: There is no such file");
+                    else
+                        continue;
+                }
+                else if(strcasecmp(command[0],"fstat") == 0)
+                {
+                    ret = fptr->fstatFile(atoi(command[1]));
+                    if(ret == -1)
+                        printf("\n ERROR: Incorrect parameters");
+                    else if( ret == -2)
+                        printf("\n ERROR: There is no such file");
+                    else
+                        continue;
+                }
+                else
+                {
+                    printf("\n ERROR: Command Not Found\n");
+                    continue;
+                }
             }
             else if(count == 3)
             {

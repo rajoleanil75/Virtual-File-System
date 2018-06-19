@@ -62,7 +62,9 @@ public:
 	virtual void initInodeTable();
 	virtual void lsFile();
 	virtual void closeAllFile();
-	// virtual void displayHelp();
+	virtual void displayHelp();
+	virtual int statFile(char *);
+	virtual int fstatFile(int );
 	// virtual int getFDFromName(char *);
 	// virtual PINODE get_Inode(char *);
 	// virtual int createFile(char *, int );
@@ -72,7 +74,5 @@ public:
 	// virtual int openFile(char *,int );
 	// virtual void closeFileByFD(int );
 	// virtual int lseekFile(int , int , int );
-	// virtual int fstatFile(int );
-	// virtual int statFile(char *);
 	// virtual int truncateFile(char *);
 };
