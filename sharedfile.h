@@ -65,14 +65,14 @@ public:
 	virtual void displayHelp();
 	virtual int statFile(char *);
 	virtual int fstatFile(int );
-	// virtual int getFDFromName(char *);
+	virtual int closeFileByName(char *);
+	virtual int getFDFromName(char *);
+	virtual int rmFile(char *);
 	// virtual PINODE get_Inode(char *);
 	// virtual int createFile(char *, int );
-	// virtual int rmFile(char *);
 	// virtual int readFile(int , char *, int );
 	// virtual int writeFile(int , char *, int );
 	// virtual int openFile(char *,int );
-	// virtual void closeFileByFD(int );
 	// virtual int lseekFile(int , int , int );
 	// virtual int truncateFile(char *);
 };

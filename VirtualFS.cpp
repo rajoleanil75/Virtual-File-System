@@ -19,6 +19,65 @@ VirtualFS::~VirtualFS()
 	}
 }
 
+int VirtualFS::rmFile(char *name)
+{
+	int fd = getFDFromName(name);
+	if(fd == -1)
+		return -1;
+	UFDTArr[fd].ptrfiletable->ptrinode->LinkCount -=1;
+	if(UFDTArr[fd].ptrfiletable->ptrinode->LinkCount == 0)
+	{
+		UFDTArr[fd].ptrfiletable->ptrinode->FileType = 0;
+		free(UFDTArr[fd].ptrfiletable);
+	}
+	UFDTArr[fd].ptrfiletable = NULL;
+	SUPERBLOCKobj.FreeInode +=1;
+	return 0;
+}
+
+int VirtualFS::getFDFromName(char *name)
+{
+	int i = 0;
+	while(i < 50)
+	{
+		if(UFDTArr[i].ptrfiletable != NULL)
+		{
+			if(strcmp(UFDTArr[i].ptrfiletable->ptrinode->FileName, name) == 0)
+				break;
+		}
+		i++;
+	}
+	if(i == 50)
+		return -1;
+	return i;
+}
+
+int VirtualFS::closeFileByName(char *name)
+{
+	if(name == NULL)
+		return -1;
+	PINODE temp = head;
+	while(temp != NULL)
+	{
+		if(strcmp(name, temp->FileName) == 0)
+			break;
+		temp = temp->next;
+	}
+	if(temp == NULL)
+		return -2;
+	int i = getFDFromName(name);
+	if(i == -1)
+		return -2;
+	else
+	{
+		UFDTArr[i].ptrfiletable->readoffset = 0;
+		UFDTArr[i].ptrfiletable->writeoffset = 0;
+		UFDTArr[i].ptrfiletable->ptrinode->ReferenceCount-=1;
+		UFDTArr[i].ptrfiletable->ptrinode = NULL;
+	}		
+	return 0;
+}
+
 int VirtualFS::fstatFile(int fd)
 {
 	if(fd < 0)

@@ -90,6 +90,23 @@ int main(int argc, char const *argv[])
                     else
                         continue;
                 }
+                else if(strcasecmp(command[0],"close") == 0)
+                {
+                    ret = fptr->closeFileByName(command[1]);
+                    if(ret == -1)
+                        printf("\n ERROR: Incorrect parameters");
+                    else if( ret == -2)
+                        printf("\n ERROR: There is no such file");
+                    else
+                        continue;
+                }
+                else if(strcasecmp(command[0],"rm") == 0)
+                {
+                    ret = fptr->rmFile(command[1]);
+                    if(ret == -1)
+                        printf("\n ERROR: There is no such file");
+                    continue;
+                }
                 else
                 {
                     printf("\n ERROR: Command Not Found\n");
