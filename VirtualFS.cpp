@@ -19,6 +19,18 @@ VirtualFS::~VirtualFS()
 	}
 }
 
+int VirtualFS::truncateFile(char *name)
+{
+	int fd = getFDFromName(name);
+	if(fd == -1)
+		return -1;
+	memset(UFDTArr[fd].ptrfiletable->ptrinode->Buffer, 0, 1024);
+	UFDTArr[fd].ptrfiletable->readoffset = 0;
+	UFDTArr[fd].ptrfiletable->writeoffset = 0;
+	UFDTArr[fd].ptrfiletable->ptrinode->FileActualSize = 0;
+	return 0;
+}
+
 int VirtualFS::rmFile(char *name)
 {
 	int fd = getFDFromName(name);

@@ -68,11 +68,11 @@ public:
 	virtual int closeFileByName(char *);
 	virtual int getFDFromName(char *);
 	virtual int rmFile(char *);
+	virtual int truncateFile(char *);
 	// virtual PINODE get_Inode(char *);
 	// virtual int createFile(char *, int );
 	// virtual int readFile(int , char *, int );
 	// virtual int writeFile(int , char *, int );
 	// virtual int openFile(char *,int );
 	// virtual int lseekFile(int , int , int );
-	// virtual int truncateFile(char *);
 };

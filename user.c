@@ -107,6 +107,18 @@ int main(int argc, char const *argv[])
                         printf("\n ERROR: There is no such file");
                     continue;
                 }
+                else if(strcasecmp(command[0],"man") == 0)
+                {
+                    fptr->man(command[1]);
+                    continue;
+                }
+                else if(strcasecmp(command[0],"truncate") == 0)
+                {
+                    ret = fptr->truncateFile(command[1]);
+                    if(ret == -1)
+                        printf("\n ERROR: There is no such file");
+                    continue;
+                }
                 else
                 {
                     printf("\n ERROR: Command Not Found\n");
