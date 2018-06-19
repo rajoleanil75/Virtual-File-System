@@ -32,15 +32,30 @@ int main(int argc, char const *argv[])
         {
             fflush(stdin);
             strcpy(str, "");
-            printf("VFS:>");
+            printf("\nVFS:>");
             fgets(str, 80, stdin);
             count = sscanf(str,"%s %s %s %s",command[0],command[1],command[2],command[3]);
             if(count == 1)
             {
-                printf("\n 1");
                 if(strcasecmp(command[0],"exit") == 0)
                 {
                     break;
+                }
+                else if(strcasecmp(command[0],"ls") == 0)
+                {
+                    fptr->lsFile();
+                    continue;
+                }
+                else if(strcasecmp(command[0],"closeall") == 0)
+                {
+                    fptr->closeAllFile();
+                    printf("\nAll files closed successfully");
+                    continue;
+                }
+                else
+                {
+                    printf("\nERROR: Command Not Found\n");
+                    continue;
                 }
             }
             else if(count == 2)

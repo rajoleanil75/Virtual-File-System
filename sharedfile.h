@@ -60,6 +60,8 @@ public:
 	virtual void man(char *);
 	virtual void initSuperBlock();
 	virtual void initInodeTable();
+	virtual void lsFile();
+	virtual void closeAllFile();
 	// virtual void displayHelp();
 	// virtual int getFDFromName(char *);
 	// virtual PINODE get_Inode(char *);
@@ -69,9 +71,7 @@ public:
 	// virtual int writeFile(int , char *, int );
 	// virtual int openFile(char *,int );
 	// virtual void closeFileByFD(int );
-	// virtual void closeAllFile();
 	// virtual int lseekFile(int , int , int );
-	// virtual void isFile();
 	// virtual int fstatFile(int );
 	// virtual int statFile(char *);
 	// virtual int truncateFile(char *);

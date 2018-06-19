@@ -19,6 +19,45 @@ VirtualFS::~VirtualFS()
 	}
 }
 
+void VirtualFS::closeAllFile()
+{
+	int i = 0;
+	while(i < 50)
+	{
+		if(UFDTArr[i].ptrfiletable != NULL)
+		{
+			UFDTArr[i].ptrfiletable->readoffset = 0;
+			UFDTArr[i].ptrfiletable->writeoffset = 0;
+			UFDTArr[i].ptrfiletable->ptrinode->ReferenceCount-=1;
+			UFDTArr[i].ptrfiletable->ptrinode = NULL;
+		}
+		i++;
+	}
+}
+
+void VirtualFS::lsFile()
+{
+	PINODE temp = head;
+	if(SUPERBLOCKobj.FreeInode == MAXINODE)
+	{
+		printf("\nERROR: There are no files");
+		return;
+	}
+	else{
+		printf("\nFile Name \t Inode Number \t File Size \t Link Count");
+		printf("\n---------------------------------------------------------------------------");
+		while(temp != NULL)
+		{
+			if(temp->FileType != 0)
+			{
+				printf("\n%s \t\t %d \t\t %d \t\t %d",temp->FileName, temp->InodeNumber, temp->FileActualSize, temp->LinkCount);
+			}
+			temp = temp->next;
+		}
+		printf("\n---------------------------------------------------------------------------");
+	}
+}
+
 void VirtualFS::initInodeTable()
 {
 	PINODE nn = NULL;
