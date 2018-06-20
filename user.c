@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<dlfcn.h>
 #include<string.h>
+#include<unistd.h>
 #include"sharedfile.h"
 
 int main(int argc, char const *argv[])
@@ -153,6 +154,7 @@ int main(int argc, char const *argv[])
                     }
                     else
                         continue;
+                    continue;
                 }
                 else
                 {
@@ -179,6 +181,48 @@ int main(int argc, char const *argv[])
                         printf("\n ERROR: Please try again");
                     continue;
                 }
+                else if(strcasecmp(command[0],"open") == 0)
+                {
+                    ret = fptr->openFile(command[1],atoi(command[2]));
+                    if(ret >= 0)
+                        printf("\n File is successfully opened with file descriptor: %d",ret);
+                    else if(ret == -1)
+                        printf("\n ERROR: Incorrect parameter");
+                    else if(ret == -2)
+                        printf("\n ERROR: file not present");
+                    else if(ret == -3)
+                        printf("\n ERROR: Permission denited");
+                    continue;
+                }
+                else if(strcasecmp(command[0],"read") == 0)
+                {
+                    fd = fptr->getFDFromName(command[1]);
+                    if(fd == -1)
+                    {
+                        printf("\n ERROR: Incorrect parameter");
+                        continue;
+                    }
+                    ptr = (char *)malloc(sizeof(atoi(command[2])+1));
+                    if(ptr == NULL)
+                    {
+                        printf("\n ERROR: Memory allocation failure");
+                        continue;
+                    }
+                    ret = fptr->readFile(fd, ptr, atoi(command[2]));
+                    if(ret == -1)
+                        printf("\n ERROR: File not existing");
+                    if(ret == -2)
+                        printf("\n ERROR: Permission denied");
+                    if(ret == -3)
+                        printf("\n ERROR: Reached at the end of file");
+                    if(ret == -4)
+                        printf("\n ERROR: It is not regular file");
+                    if(ret == 0)
+                        printf("\n ERROR: File empty");
+                    if(ret > 0)
+                        write(2, ptr, ret);
+                    continue;
+                }
                 else
                 {
                     printf("\n ERROR: Command not found");
@@ -187,11 +231,30 @@ int main(int argc, char const *argv[])
             }
             else if(count == 4)
             {
-                printf("\n 4\t %d\n",count);
+                if(strcasecmp(command[0],"lseek") == 0)
+                {
+                    fd = fptr->getFDFromName(command[1]);
+                    if(fd == -1)
+                    {
+                        printf("\n ERROR: Incorrect parameter");
+                        continue;
+                    }
+                    ret = fptr->lseekFile(fd, atoi(command[2]), atoi(command[3]));
+                    if(ret == -1)
+                    {
+                        printf("\n ERROR: Unable to perform lseek");
+                        continue;
+                    }
+                }
+                else
+                {
+                    printf("\n ERROR: Command not found");
+                    continue;
+                }
             }
             else
             {
-                printf("\nERROR: Command not found\n");
+                printf("\nERROR: Command not found");
                 continue;
             }
         }

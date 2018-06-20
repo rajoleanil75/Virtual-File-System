@@ -1,0 +1,108 @@
+VFS:>create a.txt 3
+
+ File successfully created with the file descriptor: 0
+VFS:>write a.txt
+
+ Enter the data:
+hi anna
+
+VFS:>
+ERROR: Command not found
+VFS:>read a.txt
+
+ ERROR: Command Not Found
+VFS:>read a.txt 7
+hi anna
+VFS:>man truncate
+
+ Description: Used to remove data from file
+ Usage: truncate File_name
+VFS:>truncate a.txt
+
+VFS:>read a.txt
+
+ ERROR: Command Not Found
+VFS:>read a.txt 3
+
+ ERROR: Reached at the end of file
+VFS:>exit
+anil@ShambhuRaje:/mnt/f/C Project/Virtual-File-System$
+anil@ShambhuRaje:/mnt/f/C Project/Virtual-File-System$
+anil@ShambhuRaje:/mnt/f/C Project/Virtual-File-System$
+anil@ShambhuRaje:/mnt/f/C Project/Virtual-File-System$
+anil@ShambhuRaje:/mnt/f/C Project/Virtual-File-System$ ./a.out
+
+VFS:>help
+
+ ls: To list out all files
+ clear: To clear console
+ open: To open the file
+ close: To close the file
+ closeall: To close all opened file
+ read: To read the contents of file
+ write: To write contents to file
+ exit: To terminate file system
+ stat: To display information of file using name
+ fstat: To display information of file using file descriptor
+ truncate: To remove all data from file
+ rm: To delete the file
+ man: To display help for single command
+
+ For more information about command type
+         man command_name
+VFS:>man create
+
+ Description: Used to create new regular file
+ Usage: create File_name permission
+VFS:>create a.txt 3
+
+ File successfully created with the file descriptor: 0
+VFS:>write a.txt
+
+ Enter the data:
+hi hello
+
+VFS:>
+ERROR: Command not found
+VFS:>read a.txt 5
+hi he
+VFS:>stat a.txt
+
+ ------Statistical Information about file------
+ File name: a.txt
+ Inode Number: 1
+ File Size: 1024
+ Actual File Size: 8
+ Link count: 1
+ Reference count: 1
+File permission: Read & Write
+VFS:>fstat a.txt
+
+ ------Statistical Information about file------
+ File name: a.txt
+ Inode Number: 1
+ File Size: 1024
+ Actual File Size: 8
+ Link count: 1
+ Reference count: 1
+File permission: Read & Write
+VFS:>truncate a.txt
+
+VFS:>read a.txt 3
+
+ ERROR: Reached at the end of file
+VFS:>ls
+
+File Name        Inode Number    File Size       Link Count
+---------------------------------------------------------------------------
+a.txt            1               0               1
+---------------------------------------------------------------------------
+VFS:>close a.txt
+
+VFS:>ls
+
+File Name        Inode Number    File Size       Link Count
+---------------------------------------------------------------------------
+a.txt            1               0               1
+---------------------------------------------------------------------------
+VFS:>exit
