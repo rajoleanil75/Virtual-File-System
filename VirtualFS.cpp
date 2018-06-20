@@ -19,6 +19,79 @@ VirtualFS::~VirtualFS()
 	}
 }
 
+PINODE VirtualFS::getInode(char *name)
+{
+	PINODE temp = head;
+	if(name == NULL)
+		return NULL;
+	while(temp != NULL)
+	{
+		if(strcmp(name, temp->FileName) == 0)
+			break;
+		temp = temp->next;
+	}
+	return temp;
+}
+
+int VirtualFS::createFile(char *name, int permission)
+{
+	int i = 0;
+	PINODE temp = head;
+	if((name == NULL) || (permission == 0) || (permission > 3))
+		return -1;
+	else if(SUPERBLOCKobj.FreeInode == 0)
+		return -2;
+	else if(getInode(name) != NULL)
+		return -3;
+	(SUPERBLOCKobj.FreeInode)--;
+	while(temp != NULL)
+	{
+		if(temp->FileType == 0)
+			break;
+		temp = temp->next;
+	}
+	while(i < 50)
+	{
+		if(UFDTArr[i].ptrfiletable == NULL)
+			break;
+		i++;
+	}
+	UFDTArr[i].ptrfiletable = (PFILETABLE)malloc(sizeof(FILETABLE));
+	if(UFDTArr[i].ptrfiletable == NULL)
+		return -4;
+	UFDTArr[i].ptrfiletable->count = 1;
+	UFDTArr[i].ptrfiletable->mode = permission;
+	UFDTArr[i].ptrfiletable->readoffset = 0;
+	UFDTArr[i].ptrfiletable->writeoffset = 0;
+	UFDTArr[i].ptrfiletable->ptrinode = temp;
+	strcpy(UFDTArr[i].ptrfiletable->ptrinode->FileName, name);
+	UFDTArr[i].ptrfiletable->ptrinode->FileType = REGULAR;
+	UFDTArr[i].ptrfiletable->ptrinode->ReferenceCount = 1;
+	UFDTArr[i].ptrfiletable->ptrinode->LinkCount = 1;
+	UFDTArr[i].ptrfiletable->ptrinode->FileSize = MAXFILESIZE;
+	UFDTArr[i].ptrfiletable->ptrinode->FileActualSize = 0;
+	UFDTArr[i].ptrfiletable->ptrinode->Permission = permission;
+	UFDTArr[i].ptrfiletable->ptrinode->Buffer = (char *)malloc(MAXFILESIZE);
+	memset(UFDTArr[i].ptrfiletable->ptrinode->Buffer, 0, 1024);
+	return i;	
+}
+
+int VirtualFS::writeFile(int fd, char *arr, int isize)
+{
+	if(((UFDTArr[fd].ptrfiletable->mode) != WRITE ) && ((UFDTArr[fd].ptrfiletable->mode) != READ+WRITE))
+		return -1;
+	else if(((UFDTArr[fd].ptrfiletable->ptrinode->Permission) != WRITE ) && ((UFDTArr[fd].ptrfiletable->ptrinode->Permission) != READ+WRITE))
+		return -1;
+	else if((UFDTArr[fd].ptrfiletable->writeoffset) == MAXFILESIZE)
+		return -2;
+	else if((UFDTArr[fd].ptrfiletable->ptrinode->FileType) != REGULAR)
+		return -3;
+	strncpy((UFDTArr[fd].ptrfiletable->ptrinode->Buffer)+(UFDTArr[fd].ptrfiletable->writeoffset), arr, isize);
+	(UFDTArr[fd].ptrfiletable->writeoffset) = (UFDTArr[fd].ptrfiletable->writeoffset)+isize;
+	(UFDTArr[fd].ptrfiletable->ptrinode->FileActualSize) = (UFDTArr[fd].ptrfiletable->ptrinode->FileActualSize)+isize;
+	return isize;
+}
+
 int VirtualFS::truncateFile(char *name)
 {
 	int fd = getFDFromName(name);
